@@ -19,7 +19,14 @@ interface ProductFormProps {
   isLoading?: boolean;
 }
 
-const CATEGORIES = ["Eletrônicos", "Calçados", "Vestuário", "Acessórios", "Casa", "Esporte"];
+const CATEGORIES = [
+  "Protetor Solar",
+  "Protetor Facial",
+  "Protetor Corporal",
+  "Hidratante com FPS",
+  "Bronzeador",
+  "Pós-Sol",
+];
 
 export function ProductForm({ product, onSubmit, onCancel, isLoading }: ProductFormProps) {
   const [nome, setNome] = useState("");
@@ -47,31 +54,47 @@ export function ProductForm({ product, onSubmit, onCancel, isLoading }: ProductF
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-5">
       <div className="space-y-2">
-        <Label htmlFor="nome">Nome</Label>
+        <Label htmlFor="nome" className="text-sm font-medium">
+          Nome do Produto
+        </Label>
         <Input
           id="nome"
           value={nome}
           onChange={(e) => setNome(e.target.value)}
-          placeholder="Nome do produto"
+          placeholder="Ex: Solar Expertise FPS 70"
           required
+          className="h-11 rounded-xl"
+          aria-describedby="nome-hint"
         />
+        <p id="nome-hint" className="sr-only">
+          Digite o nome do produto
+        </p>
       </div>
       
       <div className="space-y-2">
-        <Label htmlFor="descricao">Descrição</Label>
+        <Label htmlFor="descricao" className="text-sm font-medium">
+          Descrição
+        </Label>
         <Textarea
           id="descricao"
           value={descricao}
           onChange={(e) => setDescricao(e.target.value)}
-          placeholder="Descrição do produto"
+          placeholder="Descreva as características do produto..."
           rows={3}
+          className="rounded-xl resize-none"
+          aria-describedby="descricao-hint"
         />
+        <p id="descricao-hint" className="sr-only">
+          Campo opcional para descrever o produto
+        </p>
       </div>
       
       <div className="space-y-2">
-        <Label htmlFor="preco">Preço (R$)</Label>
+        <Label htmlFor="preco" className="text-sm font-medium">
+          Preço (R$)
+        </Label>
         <Input
           id="preco"
           type="number"
@@ -79,32 +102,54 @@ export function ProductForm({ product, onSubmit, onCancel, isLoading }: ProductF
           min="0"
           value={preco}
           onChange={(e) => setPreco(e.target.value)}
-          placeholder="0.00"
+          placeholder="0,00"
           required
+          className="h-11 rounded-xl"
+          aria-describedby="preco-hint"
         />
+        <p id="preco-hint" className="sr-only">
+          Digite o preço em reais
+        </p>
       </div>
       
       <div className="space-y-2">
-        <Label htmlFor="categoria">Categoria</Label>
+        <Label htmlFor="categoria" className="text-sm font-medium">
+          Categoria
+        </Label>
         <Select value={categoria} onValueChange={setCategoria} required>
-          <SelectTrigger>
+          <SelectTrigger 
+            className="h-11 rounded-xl"
+            aria-describedby="categoria-hint"
+          >
             <SelectValue placeholder="Selecione uma categoria" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="rounded-xl">
             {CATEGORIES.map((cat) => (
-              <SelectItem key={cat} value={cat}>
+              <SelectItem key={cat} value={cat} className="rounded-lg">
                 {cat}
               </SelectItem>
             ))}
           </SelectContent>
         </Select>
+        <p id="categoria-hint" className="sr-only">
+          Selecione a categoria do produto
+        </p>
       </div>
       
       <div className="flex gap-3 pt-4">
-        <Button type="submit" disabled={isLoading} className="flex-1">
-          {isLoading ? "Salvando..." : product ? "Atualizar" : "Criar"}
+        <Button 
+          type="submit" 
+          disabled={isLoading} 
+          className="flex-1 h-11 rounded-xl bg-gradient-accent hover:opacity-90 transition-all font-medium"
+        >
+          {isLoading ? "Salvando..." : product ? "Atualizar" : "Criar Produto"}
         </Button>
-        <Button type="button" variant="outline" onClick={onCancel}>
+        <Button 
+          type="button" 
+          variant="outline" 
+          onClick={onCancel}
+          className="h-11 rounded-xl border-2"
+        >
           Cancelar
         </Button>
       </div>
